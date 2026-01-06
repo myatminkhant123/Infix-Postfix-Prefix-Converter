@@ -54,6 +54,14 @@ const App: React.FC = () => {
 
   const analyzeWithAI = async (data: any, opType: OperationType) => {
     setIsAnalyzing(true);
+    
+    // Check if API KEY is present
+    if (!process.env.API_KEY || process.env.API_KEY === "undefined") {
+      setAiAnalysis("Mentor Alert: The API_KEY is missing in your environment variables. Please check your Vercel dashboard and redeploy!");
+      setIsAnalyzing(false);
+      return;
+    }
+
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const prompt = `
@@ -69,8 +77,9 @@ const App: React.FC = () => {
         contents: prompt,
       });
       setAiAnalysis(response.text || 'Analysis unavailable.');
-    } catch (e) {
-      setAiAnalysis('Oops! Your AI mentor hit a snag. Try processing again?');
+    } catch (e: any) {
+      console.error("Gemini API Error:", e);
+      setAiAnalysis(`Oops! Your AI mentor hit a snag: ${e.message || 'Unknown Error'}. Please ensure your API key is valid and has Gemini access.`);
     } finally {
       setIsAnalyzing(false);
     }
@@ -81,7 +90,7 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <header className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-lg p-6">
-        <div className="w-full px-6 flex items-center gap-3">
+        <div className="max-w-6xl mx-auto flex items-center gap-3">
           <div className="bg-white/20 p-2 rounded-lg">
             <i className="fas fa-calculator text-2xl"></i>
           </div>
@@ -96,7 +105,7 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      <main className="flex-grow w-full p-4 md:p-6 space-y-6">
+      <main className="flex-grow max-w-6xl mx-auto w-full p-4 md:p-8 space-y-6">
         <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-xl shadow-sm">
           <div className="flex items-center gap-3">
             <i className="fas fa-user-graduate text-blue-500 text-xl"></i>
