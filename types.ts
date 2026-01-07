@@ -16,5 +16,15 @@ export interface EvaluationStep {
 
 export interface AlgorithmResult {
   steps: Step[] | EvaluationStep[];
-  finalResult: string | number;
+  result: string | number;
+}
+
+export interface HistoryRecord {
+  id: string;
+  timestamp: number;
+  operation: string;
+  input: string;
+  result: string | number;
+  data: AlgorithmResult;
+  aiAnalysis?: string;
 }
