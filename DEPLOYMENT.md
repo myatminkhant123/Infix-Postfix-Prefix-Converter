@@ -1,0 +1,53 @@
+# Deployment Guide for Expression Master
+
+This project is a **Vite + React** application. You can deploy it for free using **Vercel** or **Netlify**.
+
+## Prerequisites
+
+**Important**: Your current folder name contains special characters (`&`, `,`) which break the build commands on Windows.
+1. Close your code editor.
+2. Rename the folder `expression-master_-infix,-prefix-&-postfix-lab` to something simple like `expression-master`.
+3. Re-open the project.
+
+---
+
+## Option 1: Deploy with Vercel (Recommended)
+
+Vercel is optimized for frontend frameworks like Vite.
+
+### Method A: Via GitHub (Best)
+1. Push this code to a GitHub repository.
+2. Go to [Vercel.com](https://vercel.com) and log in.
+3. Click **"Add New..."** -> **"Project"** and import your GitHub repo.
+4. **Configure Environment Variables**:
+   - In the "Environment Variables" section, add:
+     - **Name**: `GEMINI_API_KEY`
+     - **Value**: (Your API Key from `.env.local`)
+5. Click **Deploy**.
+
+### Method B: Via CLI
+1. Open a terminal in your project folder.
+2. Run: `npx vercel`
+3. Follow the prompts (Login, confirm settings).
+4. When asked about environment variables, say **Yes** or configure them in the dashboard later.
+
+---
+
+## Option 2: Deploy with Netlify
+
+### Method A: Drag & Drop (Requires Local Build)
+1. Run `npm run build` in your terminal (make sure you renamed the folder first!).
+2. This creates a `dist` folder.
+3. Go to [Netlify Drop](https://app.netlify.com/drop).
+4. Drag the `dist` folder onto the page.
+5. **Important**: Go to **Site Settings** -> **Environment Variables** and add `GEMINI_API_KEY`.
+
+### Method B: Via GitHub
+1. Push code to GitHub.
+2. Log in to Netlify and click **"Add new site"** -> **"Import an existing project"**.
+3. Select GitHub and choose your repo.
+4. Under **"Build settings"**, usually:
+   - **Build command**: `npm run build`
+   - **Publish directory**: `dist`
+5. Click **"Show advanced"** -> **"New Variable"** and add `GEMINI_API_KEY`.
+6. Click **Deploy**.
