@@ -143,7 +143,6 @@ const App: React.FC = () => {
 
     try {
       const genAI = new GoogleGenerativeAI(process.env.API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
       const prompt = `
         Explain this DSA algorithm: ${opType}.
@@ -152,15 +151,27 @@ const App: React.FC = () => {
         Encourage students. No Markdown characters.
       `;
 
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      analysisText = response.text() || 'Analysis unavailable.';
+      let model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-      setAiAnalysis(analysisText);
+      try {
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        analysisText = response.text();
+      } catch (firstError) {
+        console.warn("Gemini 1.5 Flash failed, switching to Gemini Pro fallback...", firstError);
+        model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        analysisText = response.text();
+      }
+
+      setAiAnalysis(analysisText || 'Analysis unavailable.');
     } catch (e: any) {
       console.error("AI Error Details:", e);
       if (e.message?.includes('503') || e.message?.includes('overloaded')) {
-        analysisText = "AI Server is currently busy (503). Retrying might work!";
+        analysisText = "AI Server is busy (503). Please try again!";
+      } else if (e.message?.includes('404')) {
+        analysisText = "AI Model Setup Error: The standard models are not enabled for this API Key.";
       } else {
         analysisText = `AI Mentor Offline: ${e.message ? e.message.substring(0, 100) : 'Unknown error'}...`;
       }
