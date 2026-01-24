@@ -40,7 +40,7 @@ export const infixToPostfix = (expression: string): { steps: Step[], result: str
       stack.push(token);
       action = `Operator '${token}' processed (precedence check)`;
     }
-    
+
     steps.push({ token, stack: stack.toArray(), output, action });
   });
 
@@ -66,13 +66,13 @@ export const infixToPrefix = (expression: string): { steps: Step[], result: stri
   const { steps, result: postfixOfReversed } = infixToPostfix(reversed);
   const finalResult = postfixOfReversed.split('').reverse().join('');
 
-  return { 
+  return {
     steps: [
       { token: 'REVERSE', stack: [], output: reversed, action: 'Step 1: Reverse input and swap brackets' },
       ...steps,
       { token: 'FINAL', stack: [], output: finalResult, action: 'Step 2: Reverse postfix result to get Prefix' }
-    ], 
-    result: finalResult 
+    ],
+    result: finalResult
   };
 };
 
@@ -90,8 +90,8 @@ export const postfixToInfix = (expression: string): { steps: Step[], result: str
       stack.push(token);
       action = `Push operand '${token}'`;
     } else if (isOperator(token)) {
-      const op2 = stack.pop();
-      const op1 = stack.pop();
+      const op2 = stack.pop() ?? '?';
+      const op1 = stack.pop() ?? '?';
       const combined = `(${op1}${token}${op2})`;
       stack.push(combined);
       action = `Pop '${op2}', '${op1}'; Push '${combined}'`;
@@ -116,8 +116,8 @@ export const prefixToInfix = (expression: string): { steps: Step[], result: stri
       stack.push(token);
       action = `Push operand '${token}'`;
     } else if (isOperator(token)) {
-      const op1 = stack.pop();
-      const op2 = stack.pop();
+      const op1 = stack.pop() ?? '?';
+      const op2 = stack.pop() ?? '?';
       const combined = `(${op1}${token}${op2})`;
       stack.push(combined);
       action = `Pop '${op1}', '${op2}'; Push '${combined}'`;
@@ -142,8 +142,8 @@ export const postfixToPrefix = (expression: string): { steps: Step[], result: st
       stack.push(token);
       action = `Push operand '${token}'`;
     } else if (isOperator(token)) {
-      const op2 = stack.pop();
-      const op1 = stack.pop();
+      const op2 = stack.pop() ?? '?';
+      const op1 = stack.pop() ?? '?';
       const combined = `${token}${op1}${op2}`;
       stack.push(combined);
       action = `Pop '${op2}', '${op1}'; Push '${combined}'`;
@@ -168,8 +168,8 @@ export const prefixToPostfix = (expression: string): { steps: Step[], result: st
       stack.push(token);
       action = `Push operand '${token}'`;
     } else if (isOperator(token)) {
-      const op1 = stack.pop();
-      const op2 = stack.pop();
+      const op1 = stack.pop() ?? '?';
+      const op2 = stack.pop() ?? '?';
       const combined = `${op1}${op2}${token}`;
       stack.push(combined);
       action = `Pop '${op1}', '${op2}'; Push '${combined}'`;
@@ -194,8 +194,8 @@ export const evaluatePostfix = (expression: string): { steps: EvaluationStep[], 
       stack.push(parseInt(token));
       action = `Push operand ${token}`;
     } else if (isOperator(token)) {
-      const b = stack.pop()!;
-      const a = stack.pop()!;
+      const b = stack.pop() ?? 0;
+      const a = stack.pop() ?? 0;
       let res = 0;
       switch (token) {
         case '+': res = a + b; break;
@@ -220,15 +220,15 @@ export const evaluatePrefix = (expression: string): { steps: EvaluationStep[], r
   const reversed = expression.replace(/\s+/g, '').split('').reverse().join('');
   const steps: EvaluationStep[] = [];
   const stack = new Stack<number>();
-  
+
   reversed.split('').forEach(token => {
     let action = "";
     if (!isNaN(parseInt(token))) {
       stack.push(parseInt(token));
       action = `Push operand ${token}`;
     } else if (isOperator(token)) {
-      const a = stack.pop()!;
-      const b = stack.pop()!;
+      const a = stack.pop() ?? 0;
+      const b = stack.pop() ?? 0;
       let res = 0;
       switch (token) {
         case '+': res = a + b; break;
