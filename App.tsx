@@ -151,29 +151,38 @@ const App: React.FC = () => {
         Encourage students. No Markdown characters.
       `;
 
-      let model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const modelsToTry = ["gemini-1.5-flash", "gemini-1.5-pro", "gemini-pro"];
+      let success = false;
 
-      try {
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        analysisText = response.text();
-      } catch (firstError) {
-        console.warn("Gemini 1.5 Flash failed, switching to Gemini Pro fallback...", firstError);
-        model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        analysisText = response.text();
+      for (const modelName of modelsToTry) {
+        try {
+          const model = genAI.getGenerativeModel({ model: modelName });
+          const result = await model.generateContent(prompt);
+          const response = await result.response;
+          analysisText = response.text();
+          if (analysisText) {
+            success = true;
+            break;
+          }
+        } catch (innerError: any) {
+          console.warn(`Model ${modelName} failed:`, innerError.message);
+          continue;
+        }
+      }
+
+      if (!success) {
+        throw new Error("All AI models failed to respond.");
       }
 
       setAiAnalysis(analysisText || 'Analysis unavailable.');
     } catch (e: any) {
       console.error("AI Error Details:", e);
       if (e.message?.includes('503') || e.message?.includes('overloaded')) {
-        analysisText = "AI Server is busy (503). Please try again!";
+        analysisText = "AI Server is busy (503). Retrying shortly...";
       } else if (e.message?.includes('404')) {
-        analysisText = "AI Model Setup Error: The standard models are not enabled for this API Key.";
+        analysisText = "AI Config Error: Please enable the 'Google Generative Language API' in your Google Cloud Console.";
       } else {
-        analysisText = `AI Mentor Offline: ${e.message ? e.message.substring(0, 100) : 'Unknown error'}...`;
+        analysisText = `AI Offline: ${e.message ? e.message.substring(0, 80) : 'Check console for details'}...`;
       }
       setAiAnalysis(analysisText);
     } finally {
