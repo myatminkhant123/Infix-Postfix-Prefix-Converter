@@ -142,7 +142,11 @@ const App: React.FC = () => {
     }
 
     try {
-      const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+      // Debugging: Check if key is loaded correctly
+      const key = process.env.API_KEY || "";
+      console.log(`Using API Key starting with: ${key.substring(0, 4)}... (Length: ${key.length})`);
+
+      const genAI = new GoogleGenerativeAI(key);
 
       const prompt = `
         Explain this DSA algorithm: ${opType}.
@@ -171,18 +175,18 @@ const App: React.FC = () => {
       }
 
       if (!success) {
-        throw new Error("All AI models failed to respond.");
+        throw new Error("All AI models failed to respond (404/Found Error)");
       }
 
       setAiAnalysis(analysisText || 'Analysis unavailable.');
     } catch (e: any) {
       console.error("AI Error Details:", e);
       if (e.message?.includes('503') || e.message?.includes('overloaded')) {
-        analysisText = "AI Server is busy (503). Retrying shortly...";
-      } else if (e.message?.includes('404')) {
-        analysisText = "AI Config Error: Please enable the 'Google Generative Language API' in your Google Cloud Console.";
+        analysisText = "System Busy: The AI server is overloaded. Please try again in a moment.";
+      } else if (e.message?.includes('404') || e.message?.includes('not found')) {
+        analysisText = "Action Required: The API Key is valid, but the 'Google Generative AI API' is not enabled or supported in your region. Please go to Google AI Studio > Get API Key and ensure a project is linked.";
       } else {
-        analysisText = `AI Offline: ${e.message ? e.message.substring(0, 80) : 'Check console for details'}...`;
+        analysisText = `Connection Issue: ${e.message ? e.message.substring(0, 80) : 'Check console'}...`;
       }
       setAiAnalysis(analysisText);
     } finally {
