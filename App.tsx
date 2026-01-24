@@ -158,6 +158,7 @@ const App: React.FC = () => {
 
       setAiAnalysis(analysisText);
     } catch (e: any) {
+      console.error("AI Error Details:", e);
       if (e.message?.includes('503') || e.message?.includes('overloaded')) {
         analysisText = "AI Server is currently busy (503). Retrying might work!";
       } else {
