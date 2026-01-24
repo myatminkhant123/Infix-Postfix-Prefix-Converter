@@ -151,13 +151,17 @@ const App: React.FC = () => {
         Encourage students. No Markdown characters.
       `;
       const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
+        model: 'gemini-1.5-flash',
         contents: prompt,
       });
       analysisText = response.text || 'Analysis unavailable.';
       setAiAnalysis(analysisText);
     } catch (e: any) {
-      analysisText = `AI Error: ${e.message}`;
+      if (e.message.includes('503') || e.message.includes('overloaded')) {
+        analysisText = "AI Server is currently busy (503). Retrying might work!";
+      } else {
+        analysisText = `AI Mentor Offline: ${e.message.substring(0, 50)}...`;
+      }
       setAiAnalysis(analysisText);
     } finally {
       setIsAnalyzing(false);
@@ -302,8 +306,8 @@ const App: React.FC = () => {
                   key={tab}
                   onClick={() => setActiveTab(tab as any)}
                   className={`px-8 py-4 text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === tab
-                      ? (theme === 'dark' ? 'text-green-400 border-b-2 border-green-500 bg-green-900/10' : 'text-indigo-600 border-b-2 border-indigo-600 bg-indigo-50/30')
-                      : 'text-slate-400 dark:text-green-800 hover:text-slate-600 dark:hover:text-green-500 hover:bg-slate-50 dark:hover:bg-green-900/5'
+                    ? (theme === 'dark' ? 'text-green-400 border-b-2 border-green-500 bg-green-900/10' : 'text-indigo-600 border-b-2 border-indigo-600 bg-indigo-50/30')
+                    : 'text-slate-400 dark:text-green-800 hover:text-slate-600 dark:hover:text-green-500 hover:bg-slate-50 dark:hover:bg-green-900/5'
                     }`}
                 >
                   {tab}
@@ -327,8 +331,8 @@ const App: React.FC = () => {
                             <div
                               key={i}
                               className={`shrink-0 w-10 h-10 flex items-center justify-center rounded-lg text-lg font-mono font-black transition-all duration-300 border ${currentStep?.token === char
-                                  ? (theme === 'dark' ? 'bg-green-600 text-black border-green-500 scale-110 shadow-lg shadow-green-900/50' : 'bg-indigo-600 text-white scale-110 shadow-lg')
-                                  : 'bg-white dark:bg-[#151515] text-slate-300 dark:text-green-900 border-slate-100 dark:border-green-900/30'
+                                ? (theme === 'dark' ? 'bg-green-600 text-black border-green-500 scale-110 shadow-lg shadow-green-900/50' : 'bg-indigo-600 text-white scale-110 shadow-lg')
+                                : 'bg-white dark:bg-[#151515] text-slate-300 dark:text-green-900 border-slate-100 dark:border-green-900/30'
                                 }`}
                             >
                               {char}
@@ -360,8 +364,8 @@ const App: React.FC = () => {
                               <div
                                 key={i}
                                 className={`w-full py-2 rounded-lg text-center font-mono font-black border shadow-sm animate-in slide-in-from-top-4 duration-300 ${theme === 'dark'
-                                    ? 'bg-[#111] text-green-400 border-green-900/50'
-                                    : 'bg-white text-indigo-600 border-indigo-100'
+                                  ? 'bg-[#111] text-green-400 border-green-900/50'
+                                  : 'bg-white text-indigo-600 border-indigo-100'
                                   }`}
                               >
                                 {item}
