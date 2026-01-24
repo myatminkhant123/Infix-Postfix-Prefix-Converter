@@ -191,7 +191,11 @@ const App: React.FC = () => {
       } else if (e.message?.includes('404') || e.message?.includes('not found')) {
         analysisText = "Action Required: The API Key is valid, but the 'Google Generative AI API' is not enabled or supported in your region. Please go to Google AI Studio > Get API Key and ensure a project is linked.";
       } else {
-        analysisText = `Connection Issue: ${e.message ? e.message.substring(0, 80) : 'Check console'}...`;
+        if (e.message?.includes("All") && e.message?.includes("failed")) {
+          analysisText = "Configuration Error: All API Keys failed (404/Restricted). Please ensure the 'Generative Language API' is ENABLED in your Google Cloud Console for these keys.";
+        } else {
+          analysisText = `Connection Issue: ${e.message ? e.message.substring(0, 80) : 'Check console'}...`;
+        }
       }
       setAiAnalysis(analysisText);
     } finally {
