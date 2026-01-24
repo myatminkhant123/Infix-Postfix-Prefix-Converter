@@ -161,22 +161,16 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900 selection:bg-indigo-100">
       <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div className="w-full px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="w-full px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4 relative">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
               <i className="fas fa-microchip"></i>
             </div>
-            <div>
-              <h1 className="text-xl font-black tracking-tight text-slate-800">
-                DSA Lab <span className="text-indigo-600">Pro</span>
-              </h1>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                <span>Stack Visualizer</span>
-                <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
-                <span>AI Mentorship</span>
-              </div>
-            </div>
           </div>
+
+          <h1 className="text-xl font-black tracking-tight text-slate-800 md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 text-center">
+            Infix-Postfix-Prefix-Converter
+          </h1>
 
           <div className="flex items-center gap-6">
             <div className="flex flex-col items-end">
