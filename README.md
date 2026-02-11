@@ -1,35 +1,23 @@
+# Infix, Postfix & Prefix Converter
 
-# Infix ⇄ Postfix ⇄ Prefix Master: The Expression Lab 2.0
+An interactive web application to convert and evaluate mathematical expressions (Infix, Postfix, Prefix) with step-by-step visualizations.
 
-A professional-grade Data Structures & Algorithms (DSA) visualization tool designed to bridge the gap between theoretical stack logic and practical implementation.
+## Features
+- **Expression Conversion**:
+  - Infix → Postfix / Prefix
+  - Postfix → Infix / Prefix
+  - Prefix → Infix / Postfix
+- **Evaluation**: Step-by-step evaluation of Postfix and Prefix expressions.
+- **Visualizer**: See the stack operations and conversion steps in real-time.
+- **Code View**: View the Java implementation for each algorithm.
+- **Complexity Analysis**: Time and Space complexity for each operation.
 
-## 🧠 New in Version 2.0
-- **Persistent Lab Archive**: Your experiments are now saved to `localStorage`. Refreshing the page no longer loses your work; revisit past conversions and AI analyses instantly.
-- **AI-Powered Mentorship**: Integrated Gemini 3.0 Flash logic to provide real-time, encouraging breakdowns of stack operations and complexity analysis.
-- **Enhanced Execution Tracking**: A high-fidelity table mapping every token to its specific stack frame and action logic.
-- **Total Conversion Suite**: Full support for all 6 conversion permutations plus real-time evaluation of Postfix/Prefix notation.
+## Tech Stack
+- **Frontend**: React + TypeScript + Vite
+- **Styling**: Tailwind CSS
 
-## 🛠️ Technical Implementation
-- **Custom Stack Engine**: A hand-coded `Stack<T>` class (LIFO) demonstrating core computer science principles.
-- **Persistence Layer**: Custom hook-based state management synced with the Browser Storage API.
-- **Responsive UX**: Built with Tailwind CSS, featuring a "Lab Archive" sidebar for rapid session restoration.
-- **AI Integration**: Secure environment-variable-driven communication with Google GenAI.
+## How to Run Locally
 
-## 📦 Deployment to Vercel
-
-1. **Push to GitHub**: Ensure your code is in a repository.
-2. **Connect to Vercel**: Import the repo into the Vercel Dashboard.
-3. **Environment Variables**: 
-   - Navigate to **Settings > Environment Variables**.
-   - Add `API_KEY` with your Gemini key from [AI Studio](https://aistudio.google.com/).
-4. **Deploy**: Vercel will serve the static files automatically.
-
----
-
-## 📄 Professional Summary (For Resume)
-
-**Senior DSA Visualization Platform | React, TypeScript, AI Integration**
-- Engineered an educational platform for visualizing stack-based algorithms, supporting 8 complex expression operations.
-- Implemented a **Persistent State System** using Web Storage APIs to maintain user session history across browser refreshes.
-- Leveraged **LLMs (Gemini API)** to generate automated, context-aware algorithmic proofs and O(n) complexity analyses.
-- Developed a custom **Generic Stack Structure** to handle operator precedence and associativity for mathematical parsing.
+1. **Clone the repository**:
+   ```bash
+   git clone [https://github.com/myatminkhant123/Infix-Postfix-Prefix-Converter.git](https://github.com/myatminkhant123/Infix-Postfix-Prefix-Converter.git)
