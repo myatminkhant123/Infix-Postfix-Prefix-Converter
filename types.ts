@@ -26,5 +26,4 @@ export interface HistoryRecord {
   input: string;
   result: string | number;
   data: AlgorithmResult;
-  aiAnalysis?: string;
 }

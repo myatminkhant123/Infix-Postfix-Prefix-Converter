@@ -1,0 +1,18 @@
+
+expression-master-lab/
+├── .env.local             # Local environment variables (API Keys)
+├── .gitignore             # Gitignore rules
+├── DEPLOYMENT.md          # Deployment instructions
+├── README.md              # Project documentation
+├── index.html             # Main HTML entry point
+├── index.tsx              # React entry point
+├── App.tsx                # Main Application Logic & UI
+├── package.json           # Dependencies and scripts configuration
+├── tsconfig.json          # TypeScript configuration
+├── vite.config.ts         # Vite build configuration
+├── types.ts               # TypeScript type definitions
+
+└── logic/                 # Core Algorithm Implementation
+    ├── algorithms.ts      # Main conversion logic (Infix/Prefix/Postfix)
+    ├── stack.ts           # Stack data structure implementation
+    └── constants.ts       # Mathematical operators and precedence rules

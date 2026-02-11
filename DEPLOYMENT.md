@@ -19,17 +19,14 @@ Vercel is optimized for frontend frameworks like Vite.
 1. Push this code to a GitHub repository.
 2. Go to [Vercel.com](https://vercel.com) and log in.
 3. Click **"Add New..."** -> **"Project"** and import your GitHub repo.
-4. **Configure Environment Variables**:
-   - In the "Environment Variables" section, add:
-     - **Name**: `GEMINI_API_KEY`
-     - **Value**: (Your API Key from `.env.local`)
+
 5. Click **Deploy**.
 
 ### Method B: Via CLI
 1. Open a terminal in your project folder.
 2. Run: `npx vercel`
 3. Follow the prompts (Login, confirm settings).
-4. When asked about environment variables, say **Yes** or configure them in the dashboard later.
+4. When asked about environment variables, say **No**.
 
 ---
 
@@ -40,7 +37,7 @@ Vercel is optimized for frontend frameworks like Vite.
 2. This creates a `dist` folder.
 3. Go to [Netlify Drop](https://app.netlify.com/drop).
 4. Drag the `dist` folder onto the page.
-5. **Important**: Go to **Site Settings** -> **Environment Variables** and add `GEMINI_API_KEY`.
+5. (Optional) Go to **Site Settings** -> **Environment Variables** if you have other secrets.
 
 ### Method B: Via GitHub
 1. Push code to GitHub.
@@ -49,5 +46,5 @@ Vercel is optimized for frontend frameworks like Vite.
 4. Under **"Build settings"**, usually:
    - **Build command**: `npm run build`
    - **Publish directory**: `dist`
-5. Click **"Show advanced"** -> **"New Variable"** and add `GEMINI_API_KEY`.
+
 6. Click **Deploy**.
